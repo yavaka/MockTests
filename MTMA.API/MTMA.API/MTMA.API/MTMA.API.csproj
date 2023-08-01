@@ -7,7 +7,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="stylecop.json" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Controllers\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="stylecop.json" />
   </ItemGroup>
 
   <ItemGroup>
@@ -15,6 +23,15 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MTMA.Common\MTMA.Common.csproj" />
+    <ProjectReference Include="..\MTMA.Data.Models\MTMA.Data.Models.csproj" />
+    <ProjectReference Include="..\MTMA.Data\MTMA.Data.csproj" />
+    <ProjectReference Include="..\MTMA.Services.Data\MTMA.Services.Data.csproj" />
+    <ProjectReference Include="..\MTMA.Services.Mapping\MTMA.Services.Mapping.csproj" />
+    <ProjectReference Include="..\MTMA.Services.ServiceModels\MTMA.Services.ServiceModels.csproj" />
   </ItemGroup>
 
 </Project>
