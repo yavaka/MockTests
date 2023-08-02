@@ -13,4 +13,9 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\MTMA.Data.Models\MTMA.Data.Models.csproj" />
+    <ProjectReference Include="..\MTMA.Services.Mapping\MTMA.Services.Mapping.csproj" />
+  </ItemGroup>
+
 </Project>

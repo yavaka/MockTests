@@ -13,4 +13,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\MTMA.Data.Common\MTMA.Data.Common.csproj" />
+  </ItemGroup>
+
 </Project>
