@@ -1,8 +1,8 @@
-﻿namespace AspNetCoreTemplate.Data.Common.Repositories
+﻿namespace MTMA.Data.Common.Repositories
 {
     using System.Linq;
 
-    using AspNetCoreTemplate.Data.Common.Models;
+    using MTMA.Data.Common.Models;
 
     /// <summary>
     /// Generic interface for a repository that deals with entities supporting soft deletion.
