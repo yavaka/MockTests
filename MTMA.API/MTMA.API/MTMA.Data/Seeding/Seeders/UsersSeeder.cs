@@ -28,11 +28,11 @@
 
             // Check if the administrator user exists
             var userManager = serviceProvider.GetRequiredService<UserManager<MTMAUser>>();
-            var admin = await userManager.FindByEmailAsync(AdminConstants.Email);
+            var adminOpt = GetAdminOptions(serviceProvider);
+            var admin = await userManager.FindByEmailAsync(adminOpt.Email);
             if (admin is null)
             {
                 // Retrieve administrator options from configuration
-                var adminOpt = GetAdminOptions(serviceProvider);
 
                 // Create and initialize the administrator user
                 var adminUser = new MTMAUser

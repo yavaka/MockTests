@@ -1,8 +1,7 @@
 ﻿namespace MTMA.API.Configuration
 {
-    using System.Reflection;
-    using Microsoft.AspNetCore.Identity;
     using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.DependencyInjection;
     using MTMA.Data;
     using MTMA.Data.Common.Repositories;
     using MTMA.Data.Models.Identity;
@@ -10,6 +9,8 @@
     using MTMA.Data.Seeding;
     using MTMA.Services.Mapping;
     using MTMA.Services.ServiceModels;
+    using SlackLogger;
+    using System.Reflection;
 
     internal static class APIConfiguration
     {
@@ -38,6 +39,13 @@
 
             // Options
             services.Configure<AdminOptions>(configuration.GetSection(AdminOptions.Admin));
+
+            // Slack logger
+            services.AddLogging(builder =>
+            {
+                builder.AddConfiguration(configuration.GetSection("Logging"));
+                builder.AddSlack();
+            });
 
             return services;
         }
