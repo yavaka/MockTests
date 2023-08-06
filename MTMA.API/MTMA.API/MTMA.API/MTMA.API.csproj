@@ -4,17 +4,37 @@
     <TargetFramework>net7.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>aca96351-6c94-4909-86e8-1cc3793b3663</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
+    <Content Remove="stylecop.json" />
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="stylecop.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="7.0.9">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="7.0.9" />
+    <PackageReference Include="SlackLogger" Version="4.0.2" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MTMA.Common\MTMA.Common.csproj" />
+    <ProjectReference Include="..\MTMA.Data.Models\MTMA.Data.Models.csproj" />
+    <ProjectReference Include="..\MTMA.Data\MTMA.Data.csproj" />
+    <ProjectReference Include="..\MTMA.Services.Data\MTMA.Services.Data.csproj" />
+    <ProjectReference Include="..\MTMA.Services.Mapping\MTMA.Services.Mapping.csproj" />
+    <ProjectReference Include="..\MTMA.Services.ServiceModels\MTMA.Services.ServiceModels.csproj" />
   </ItemGroup>
 
 </Project>

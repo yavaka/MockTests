@@ -6,10 +6,6 @@ builder.Services.AddAPIServices(builder.Configuration);
 
 var app = builder.Build();
 
-app.UseHttpsRedirection();
-
-app.UseAuthorization();
-
-app.MapControllers();
+app.ConfigureAPI();
 
 app.Run();
