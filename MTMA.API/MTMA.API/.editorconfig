@@ -21,6 +21,7 @@ csharp_style_throw_expression = true:suggestion
 csharp_style_allow_embedded_statements_on_same_line_experimental = true:silent
 dotnet_diagnostic.SA1600.severity = silent
 dotnet_diagnostic.SA1633.severity = silent
+dotnet_diagnostic.SA1124.severity = silent
 
 [*.{cs,vb}]
 #### Naming styles ####
