@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
-
-namespace MTMA.API.Controllers
+﻿namespace MTMA.API.Controllers
 {
-    [Route("api/[controller]")]
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Mvc;
+
+    [Authorize]
     [ApiController]
+    [Route("api/[controller]")]
     public class HomeController : ControllerBase
     {
         private readonly ILogger<HomeController> _logger;

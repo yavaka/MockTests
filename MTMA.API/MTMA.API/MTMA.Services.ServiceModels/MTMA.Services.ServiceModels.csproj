@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -14,8 +15,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\MTMA.Common\MTMA.Common.csproj" />
     <ProjectReference Include="..\MTMA.Data.Models\MTMA.Data.Models.csproj" />
     <ProjectReference Include="..\MTMA.Services.Mapping\MTMA.Services.Mapping.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="DataServices\" />
   </ItemGroup>
 
 </Project>

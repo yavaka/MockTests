@@ -1,9 +1,10 @@
 ﻿namespace MTMA.API.Controllers
 {
+    using FluentValidation;
+    using FluentValidation.AspNetCore;
     using Microsoft.AspNetCore.Mvc;
     using MTMA.Services.Identity;
     using MTMA.Services.ServiceModels;
-    using MTMA.Services.ServiceModels.Services.Identity;
 
     [ApiController]
     [Route("api/[controller]")]
@@ -22,17 +23,6 @@
 
             return identityResult.Succeeded
                 ? this.Ok()
-                : this.BadRequest(identityResult.Errors);
-        }
-
-        [HttpGet]
-        [Route(nameof(Login))]
-        public async Task<IActionResult> Login([FromQuery] LoginUserServiceModel serviceModel)
-        {
-            var (identityResult, token) = await this._identityService.Login(serviceModel);
-
-            return identityResult.Succeeded
-                ? this.Ok(token)
                 : this.BadRequest(identityResult.Errors);
         }
     }

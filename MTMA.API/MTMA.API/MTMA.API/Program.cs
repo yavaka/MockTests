@@ -6,6 +6,6 @@ builder.Services.AddAPIServices(builder.Configuration);
 
 var app = builder.Build();
 
-app.ConfigureAPI();
+app.ConfigureMTMAAPI();
 
 app.Run();
