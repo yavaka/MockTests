@@ -22,10 +22,8 @@ namespace MTMA.API.Controllers
             }
             catch (Exception e)
             {
-                this._logger.LogError(e, $"{nameof(this.Index)}");
+                this._logger.LogError(e, $"This is Slack Logger test: {nameof(this.Index)}");
             }
-
-            this._logger.LogWarning("This is logged Warning msg");
 
             return this.Ok();
         }
