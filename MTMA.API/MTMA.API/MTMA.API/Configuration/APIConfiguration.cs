@@ -90,6 +90,7 @@
             // Identity
             services.AddIdentity<MTMAUser, MTMARole>(options =>
             {
+                options.User.RequireUniqueEmail = true;
                 options.Password.RequireDigit = true;
                 options.Password.RequireLowercase = true;
                 options.Password.RequireUppercase = true;

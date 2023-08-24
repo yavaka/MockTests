@@ -1,4 +1,4 @@
-﻿namespace MTMA.Services.ServiceModels.Services.Identity
+﻿namespace MTMA.Services.ServiceModels
 {
     using AutoMapper;
     using Microsoft.AspNetCore.Identity;
@@ -8,7 +8,7 @@
     {
         public bool Succeeded { get; set; }
 
-        public IEnumerable<string> Errors { get; set; } = new List<string>();
+        public List<string> Errors { get; set; } = new List<string>();
 
         public void CreateMappings(IProfileExpression configuration)
         {

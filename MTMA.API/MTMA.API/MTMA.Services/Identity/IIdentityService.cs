@@ -1,7 +1,6 @@
 ﻿namespace MTMA.Services.Identity
 {
     using MTMA.Services.ServiceModels;
-    using MTMA.Services.ServiceModels.Services.Identity;
 
     /// <summary>
     /// Interface representing the service responsible for identity-related operations.
@@ -25,5 +24,12 @@
         /// <para>- A string representing the generated JWT token upon successful login.</para>
         /// </returns>
         Task<(IdentityResultServiceModel, string)> Login(LoginUserServiceModel serviceModel);
+
+        /// <summary>
+        /// Changes the password for the user associated with the provided <paramref name="changePasswordRequest"/>.
+        /// </summary>
+        /// <param name="changePasswordRequest">The <see cref="ChangePasswordServiceModel"/> containing the necessary data for password change.</param>
+        /// <returns>An <see cref="IdentityResultServiceModel"/> indicating the outcome of the password change operation.</returns>
+        Task<IdentityResultServiceModel> ChangePassword(ChangePasswordServiceModel changePasswordRequest);
     }
 }

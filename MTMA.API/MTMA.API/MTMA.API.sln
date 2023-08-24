@@ -16,6 +16,9 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MTMA.Common", "MTMA.Common\MTMA.Common.csproj", "{70BBFC88-8531-4924-9858-0E49F43F2BFD}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{54981571-4C2C-422E-96B4-CFEFFB3163C2}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{60E73773-5986-4AA0-916D-9701C24C1765}"
 EndProject
@@ -59,11 +62,6 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MTMA.API.Tests", "MTMA.API.Tests\MTMA.API.Tests.csproj", "{22026A54-5732-4DB9-94AE-F108BAC57947}"
 	ProjectSection(ProjectDependencies) = postProject
 		{8B9A4B56-1B74-4EA7-B165-BFF4DD9C5E03} = {8B9A4B56-1B74-4EA7-B165-BFF4DD9C5E03}
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{9CF223A6-91F4-4C3F-B62E-E4B7051113CC}"
-	ProjectSection(SolutionItems) = preProject
-		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MTMA.Services", "MTMA.Services\MTMA.Services.csproj", "{4937E10E-ED90-40C3-9D92-A8F75861184D}"

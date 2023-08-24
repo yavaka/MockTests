@@ -1,7 +1,6 @@
 ﻿namespace MTMA.API.Controllers
 {
-    using FluentValidation;
-    using FluentValidation.AspNetCore;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
     using MTMA.Services.Identity;
     using MTMA.Services.ServiceModels;
@@ -23,7 +22,30 @@
 
             return identityResult.Succeeded
                 ? this.Ok()
-                : this.BadRequest(identityResult.Errors);
+                : this.BadRequest(identityResult);
+        }
+
+        [HttpGet]
+        [Route(nameof(Login))]
+        public async Task<IActionResult> Login([FromQuery] LoginUserServiceModel serviceModel)
+        {
+            var (identityResult, token) = await this._identityService.Login(serviceModel);
+
+            return identityResult.Succeeded
+                ? this.Ok(new { token = token })
+                : this.BadRequest(identityResult);
+        }
+
+        [HttpPost]
+        [Authorize]
+        [Route(nameof(ChangePassword))]
+        public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordServiceModel serviceModel)
+        {
+            var identityResult = await this._identityService.ChangePassword(serviceModel);
+
+            return identityResult.Succeeded
+                ? this.Ok()
+                : this.BadRequest(identityResult);
         }
     }
 }

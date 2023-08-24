@@ -7,7 +7,7 @@
     using MTMA.Services.JwtGenerator;
     using MTMA.Services.Mapping;
     using MTMA.Services.ServiceModels;
-    using MTMA.Services.ServiceModels.Services.Identity;
+    using static MTMA.Common.GlobalConstants.Common;
 
     public class IdentityService : IIdentityService
     {
@@ -45,7 +45,7 @@
                 {
                     Errors = new List<string>
                     {
-                        $"Failed to register the user '{serviceModel.UserName}'."
+                        $"{InternalErrorCode} Failed to register the user '{serviceModel.Username}'."
                     }
                 };
             }
@@ -64,7 +64,7 @@
                     }
                 };
 
-                // Validate user
+                // Get user by email
                 var user = await this._userManager.FindByEmailAsync(serviceModel.Email);
                 if (user is null)
                 {
@@ -82,9 +82,7 @@
                     return (identityResult, default!);
                 }
 
-                var token = await this._jwtGeneratorService.GenerateToken(user);
-                
-                return (identityResult, token);
+                return (identityResult, await this._jwtGeneratorService.GenerateToken(user));
             }
             catch (Exception e)
             {
@@ -93,9 +91,48 @@
                 {
                     Errors = new List<string>
                     {
-                        $"Failed to login."
+                        $"{InternalErrorCode} Failed to login."
                     }
                 }, default!);
+            }
+        }
+
+        public async Task<IdentityResultServiceModel> ChangePassword(ChangePasswordServiceModel changePasswordRequest)
+        {
+            try
+            {
+                var result = new IdentityResultServiceModel
+                {
+                    Succeeded = true,
+                };
+
+                // Get user by id
+                var user = await this._userManager.FindByIdAsync(changePasswordRequest.UserId);
+                if (user == null)
+                {
+                    result.Succeeded = false;
+                    result.Errors.Add("User not found!");
+                    return result;
+                }
+
+                // Change password
+                var identityResult = await this._userManager.ChangePasswordAsync(
+                    user,
+                    changePasswordRequest.CurrentPassword,
+                    changePasswordRequest.NewPassword);
+
+                return this._mapper.Map<IdentityResult, IdentityResultServiceModel>(identityResult);
+            }
+            catch (Exception e)
+            {
+                this._logger.LogError(e, "Change password failed while processing {MethodName}.", nameof(ChangePassword));
+                return new IdentityResultServiceModel
+                {
+                    Errors = new List<string>
+                    {
+                        $"{InternalErrorCode} Failed to change password."
+                    }
+                };
             }
         }
     }

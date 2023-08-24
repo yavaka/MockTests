@@ -1,40 +1,62 @@
 ﻿namespace MTMA.Services.ServiceModels
 {
     using FluentValidation;
+    using static MTMA.Common.GlobalConstants.CommonValidationMessages;
     using static MTMA.Common.GlobalConstants.Identity;
 
     internal class RegisterUserServiceModelValidator : AbstractValidator<RegisterUserServiceModel>
     {
+        private const string USERNAME = "Username";
+        private const string EMAIL = "Email";
+        private const string PASSWORD = "Password";
+
         public RegisterUserServiceModelValidator()
         {
             // Username
-            this.RuleFor(u => u.UserName)
-                .MinimumLength(MinUsernameLength).WithMessage($"Username must be at least {MinUsernameLength} characters long.")
-                .MaximumLength(MaxUsernameLength).WithMessage($"Username cannot exceed {MaxUsernameLength} characters.")
-                .NotNull().WithMessage("Username is required.")
-                .NotEmpty().WithMessage("Username cannot be empty.");
+            this.RuleFor(u => u.Username)
+                .MinimumLength(MinUsernameLength)
+                    .WithMessage(PropertyMinLengthValidationMsg(USERNAME, MinUsernameLength))
+                .MaximumLength(MaxUsernameLength)
+                    .WithMessage(PropertyMaxLengthValidationMsg(USERNAME, MaxUsernameLength))
+                .NotNull()
+                    .WithMessage(PropertyIsRequiredValidationMsg(USERNAME))
+                .NotEmpty()
+                    .WithMessage(PropertyCannotBeEmptyValidationMsg(USERNAME));
 
             // Email
             this.RuleFor(u => u.Email)
-                .EmailAddress().WithMessage("Please enter a valid email address.")
-                .MinimumLength(MinEmailLength).WithMessage($"Email must be at least {MinEmailLength} characters long.")
-                .MaximumLength(MaxEmailLength).WithMessage($"Email cannot exceed {MaxEmailLength} characters.")
-                .NotNull().WithMessage("Email is required.")
-                .NotEmpty().WithMessage("Email cannot be empty.");
+                .EmailAddress()
+                    .WithMessage("Please enter a valid email address.")
+                .MinimumLength(MinEmailLength)
+                    .WithMessage(PropertyMinLengthValidationMsg(EMAIL, MinEmailLength))
+                .MaximumLength(MaxEmailLength)
+                    .WithMessage(PropertyMaxLengthValidationMsg(EMAIL, MaxEmailLength))
+                .NotNull()
+                    .WithMessage(PropertyIsRequiredValidationMsg(EMAIL))
+                .NotEmpty()
+                    .WithMessage(PropertyCannotBeEmptyValidationMsg(EMAIL));
 
             // Password
             this.RuleFor(u => u.Password)
-                .MinimumLength(MinPasswordLength).WithMessage($"Password must be at least {MinPasswordLength} characters long.")
-                .MaximumLength(MaxPasswordLength).WithMessage($"Password cannot exceed {MaxPasswordLength} characters.")
-                .Must(p => p.Any(char.IsLower)).WithMessage("Password must contain at least one lowercase letter.")
-                .Must(p => p.Any(char.IsUpper)).WithMessage("Password must contain at least one uppercase letter.")
-                .Must(p => p.Any(char.IsDigit)).WithMessage("Password must contain at least one digit.")
-                .NotNull().WithMessage("Password is required.")
-                .NotEmpty().WithMessage("Password cannot be empty.");
+                .MinimumLength(MinPasswordLength)
+                    .WithMessage(PropertyMinLengthValidationMsg(PASSWORD, MinPasswordLength))
+                .MaximumLength(MaxPasswordLength)
+                    .WithMessage(PropertyMaxLengthValidationMsg(PASSWORD, MaxEmailLength))
+                .Must(p => p.Any(char.IsLower))
+                    .WithMessage(PasswordMustContainOneLowercaseLetter)
+                .Must(p => p.Any(char.IsUpper))
+                    .WithMessage(PasswordMustContainOneUppercaseLetter)
+                .Must(p => p.Any(char.IsDigit))
+                    .WithMessage(PasswordMustContainOneDigit)
+                .NotNull()
+                    .WithMessage(PropertyIsRequiredValidationMsg(PASSWORD))
+                .NotEmpty()
+                    .WithMessage(PropertyCannotBeEmptyValidationMsg(PASSWORD));
 
             // Confirm Password
             this.RuleFor(u => u.ConfirmPassword)
-                .Equal(u => u.Password).WithMessage("Password do not match.");
+                .Equal(u => u.Password)
+                    .WithMessage(PasswordDoNotMatch);
         }
     }
 }

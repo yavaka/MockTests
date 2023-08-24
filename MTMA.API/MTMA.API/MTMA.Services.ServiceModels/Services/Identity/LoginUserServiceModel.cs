@@ -1,4 +1,4 @@
-﻿namespace MTMA.Services.ServiceModels.Services.Identity
+﻿namespace MTMA.Services.ServiceModels
 {
     public class LoginUserServiceModel
     {
