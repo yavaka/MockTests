@@ -8,13 +8,13 @@
     {
         public bool Succeeded { get; set; }
 
-        public List<string> Errors { get; set; } = new List<string>();
+        public List<KeyValuePair<string, string>> Errors { get; set; } = new List<KeyValuePair<string, string>>();
 
         public void CreateMappings(IProfileExpression configuration)
         {
             configuration.CreateMap<IdentityResult, IdentityResultServiceModel>().ForMember(
                 destination => destination.Errors,
-                opt => opt.MapFrom(x => x.Errors.Select(t => t.Description)));
+                opt => opt.MapFrom(x => x.Errors.Select(t => new KeyValuePair<string, string>(t.Code, t.Description))));
         }
     }
 }

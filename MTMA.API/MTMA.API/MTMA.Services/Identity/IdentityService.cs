@@ -43,9 +43,9 @@
                 this._logger.LogError(e, "Registration failed while processing {MethodName}.", nameof(Register));
                 return new IdentityResultServiceModel
                 {
-                    Errors = new List<string>
+                    Errors = new List<KeyValuePair<string, string>>
                     {
-                        $"{InternalErrorCode} Failed to register the user '{serviceModel.Username}'."
+                        new KeyValuePair<string, string>(InternalErrorCode, "Failed to register the user '{serviceModel.Username}'.")
                     }
                 };
             }
@@ -58,9 +58,9 @@
                 var identityResult = new IdentityResultServiceModel
                 {
                     Succeeded = true,
-                    Errors = new List<string>
+                    Errors = new List<KeyValuePair<string, string>>
                     {
-                        "Invalid email or password"
+                        new KeyValuePair<string, string>("Login", "Invalid email or password.")
                     }
                 };
 
@@ -89,9 +89,9 @@
                 this._logger.LogError(e, "Login failed while processing {MethodName}.", nameof(Login));
                 return (new IdentityResultServiceModel
                 {
-                    Errors = new List<string>
+                    Errors = new List<KeyValuePair<string, string>>
                     {
-                        $"{InternalErrorCode} Failed to login."
+                        new KeyValuePair<string, string>(InternalErrorCode, "Login failed.")
                     }
                 }, default!);
             }
@@ -111,7 +111,8 @@
                 if (user == null)
                 {
                     result.Succeeded = false;
-                    result.Errors.Add("User not found!");
+                    result.Errors.Add(
+                        new KeyValuePair<string, string>("User", "User not found!"));
                     return result;
                 }
 
@@ -128,9 +129,9 @@
                 this._logger.LogError(e, "Change password failed while processing {MethodName}.", nameof(ChangePassword));
                 return new IdentityResultServiceModel
                 {
-                    Errors = new List<string>
+                    Errors = new List<KeyValuePair<string, string>>
                     {
-                        $"{InternalErrorCode} Failed to change password."
+                        new KeyValuePair<string, string>(InternalErrorCode, "Failed to change password.")
                     }
                 };
             }
