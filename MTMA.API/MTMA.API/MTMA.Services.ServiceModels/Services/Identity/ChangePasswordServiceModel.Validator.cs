@@ -15,6 +15,7 @@
         {
             // User Id
             this.RuleFor(model => model.UserId)
+                .Cascade(CascadeMode.Stop)
                 .NotNull()
                     .WithMessage(PropertyIsRequiredValidationMsg($"{InternalErrorCode} user id"))
                 .NotEmpty()
@@ -22,11 +23,17 @@
 
             // Current
             this.RuleFor(model => model.CurrentPassword)
+                .Cascade(CascadeMode.Stop)
                 .NotNull().NotEmpty()
                     .WithMessage(PropertyIsRequiredValidationMsg("Current Password"));
 
             // New Password
             this.RuleFor(model => model.NewPassword)
+                .Cascade(CascadeMode.Stop)
+                .NotNull()
+                    .WithMessage(PropertyIsRequiredValidationMsg(NEW_PASSWORD))
+                .NotEmpty()
+                    .WithMessage(PropertyCannotBeEmptyValidationMsg(NEW_PASSWORD))
                 .MinimumLength(MinPasswordLength)
                     .WithMessage(PropertyMinLengthValidationMsg(NEW_PASSWORD, MinPasswordLength))
                 .MaximumLength(MaxPasswordLength)
@@ -36,11 +43,7 @@
                 .Must(p => p.Any(char.IsUpper))
                     .WithMessage($"New {PasswordMustContainOneUppercaseLetter}")
                 .Must(p => p.Any(char.IsDigit))
-                    .WithMessage($"New {PasswordMustContainOneDigit}")
-                .NotNull()
-                    .WithMessage(PropertyIsRequiredValidationMsg(NEW_PASSWORD))
-                .NotEmpty()
-                    .WithMessage(PropertyCannotBeEmptyValidationMsg(NEW_PASSWORD));
+                    .WithMessage($"New {PasswordMustContainOneDigit}");
 
             // Confirm New Password
             this.RuleFor(model => model.ConfirmNewPassword)

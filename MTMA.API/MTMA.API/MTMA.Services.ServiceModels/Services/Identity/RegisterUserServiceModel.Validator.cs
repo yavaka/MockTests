@@ -14,47 +14,55 @@
         {
             // Username
             this.RuleFor(u => u.Username)
-                .MinimumLength(MinUsernameLength)
-                    .WithMessage(PropertyMinLengthValidationMsg(USERNAME, MinUsernameLength))
-                .MaximumLength(MaxUsernameLength)
-                    .WithMessage(PropertyMaxLengthValidationMsg(USERNAME, MaxUsernameLength))
+                .Cascade(CascadeMode.Stop)
                 .NotNull()
                     .WithMessage(PropertyIsRequiredValidationMsg(USERNAME))
                 .NotEmpty()
-                    .WithMessage(PropertyCannotBeEmptyValidationMsg(USERNAME));
+                    .WithMessage(PropertyCannotBeEmptyValidationMsg(USERNAME))
+                .MinimumLength(MinUsernameLength)
+                    .WithMessage(PropertyMinLengthValidationMsg(USERNAME, MinUsernameLength))
+                .MaximumLength(MaxUsernameLength)
+                    .WithMessage(PropertyMaxLengthValidationMsg(USERNAME, MaxUsernameLength));
 
             // Email
             this.RuleFor(u => u.Email)
+                .Cascade(CascadeMode.Stop)
+                .NotNull()
+                    .WithMessage(PropertyIsRequiredValidationMsg(EMAIL))
+                .NotEmpty()
+                    .WithMessage(PropertyCannotBeEmptyValidationMsg(EMAIL))
                 .EmailAddress()
                     .WithMessage("Please enter a valid email address.")
                 .MinimumLength(MinEmailLength)
                     .WithMessage(PropertyMinLengthValidationMsg(EMAIL, MinEmailLength))
                 .MaximumLength(MaxEmailLength)
-                    .WithMessage(PropertyMaxLengthValidationMsg(EMAIL, MaxEmailLength))
-                .NotNull()
-                    .WithMessage(PropertyIsRequiredValidationMsg(EMAIL))
-                .NotEmpty()
-                    .WithMessage(PropertyCannotBeEmptyValidationMsg(EMAIL));
+                    .WithMessage(PropertyMaxLengthValidationMsg(EMAIL, MaxEmailLength));
 
             // Password
             this.RuleFor(u => u.Password)
-                .MinimumLength(MinPasswordLength)
-                    .WithMessage(PropertyMinLengthValidationMsg(PASSWORD, MinPasswordLength))
-                .MaximumLength(MaxPasswordLength)
-                    .WithMessage(PropertyMaxLengthValidationMsg(PASSWORD, MaxEmailLength))
-                .Must(p => p.Any(char.IsLower))
-                    .WithMessage(PasswordMustContainOneLowercaseLetter)
-                .Must(p => p.Any(char.IsUpper))
-                    .WithMessage(PasswordMustContainOneUppercaseLetter)
-                .Must(p => p.Any(char.IsDigit))
-                    .WithMessage(PasswordMustContainOneDigit)
+                .Cascade(CascadeMode.Stop)
                 .NotNull()
                     .WithMessage(PropertyIsRequiredValidationMsg(PASSWORD))
                 .NotEmpty()
-                    .WithMessage(PropertyCannotBeEmptyValidationMsg(PASSWORD));
+                    .WithMessage(PropertyCannotBeEmptyValidationMsg(PASSWORD))
+                .MinimumLength(MinPasswordLength)
+                    .WithMessage(PropertyMinLengthValidationMsg(PASSWORD, MinPasswordLength))
+                .MaximumLength(MaxPasswordLength)
+                    .WithMessage(PropertyMaxLengthValidationMsg(PASSWORD, MaxPasswordLength))
+                .Must(p => p != null && p.Any(char.IsLower))
+                    .WithMessage(PasswordMustContainOneLowercaseLetter)
+                .Must(p => p != null && p.Any(char.IsUpper))
+                    .WithMessage(PasswordMustContainOneUppercaseLetter)
+                .Must(p => p != null && p.Any(char.IsDigit))
+                    .WithMessage(PasswordMustContainOneDigit);
 
             // Confirm Password
             this.RuleFor(u => u.ConfirmPassword)
+                .Cascade(CascadeMode.Stop)
+                .NotNull()
+                    .WithMessage(PropertyIsRequiredValidationMsg("Confirm Password"))
+                .NotEmpty()
+                    .WithMessage(PropertyCannotBeEmptyValidationMsg("Confirm Password"))
                 .Equal(u => u.Password)
                     .WithMessage(PasswordDoNotMatch);
         }
