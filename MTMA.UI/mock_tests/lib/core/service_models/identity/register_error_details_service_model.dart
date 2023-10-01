@@ -24,7 +24,6 @@ class RegisterErrorDetailsServiceModel {
         confirmPasswordErrors: errors['ConfirmPassword']?.cast<String>(),
       );
     } else if (data.containsKey('errors')) {
-      // This is the JSON response that you provided
       List<String> usernameErrors = [];
       List<String> emailErrors = [];
 

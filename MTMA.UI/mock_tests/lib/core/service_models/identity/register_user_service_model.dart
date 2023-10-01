@@ -1,10 +1,10 @@
-class RegisterUserServiceModel {
+class RegisterServiceModel {
   String username;
   String email;
   String password;
   String confirmPassword;
 
-  RegisterUserServiceModel({
+  RegisterServiceModel({
     required this.username,
     required this.email,
     required this.password,

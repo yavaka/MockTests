@@ -24,13 +24,12 @@ class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController = TextEditingController();
-  final ScrollController _scrollController = ScrollController();
   bool _revealPassword = true;
 
-  String? usernameErrorText;
-  String? emailErrorText;
-  String? passwordErrorText;
-  String? confirmPasswordErrorText;
+  String? usernameError;
+  String? emailError;
+  String? passwordError;
+  String? confirmPasswordError;
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +39,6 @@ class _RegisterPageState extends State<RegisterPage> {
         child: Form(
           key: _registerFormKey,
           child: SingleChildScrollView(
-            controller: _scrollController,
             child: Padding(
               padding: const EdgeInsets.all(30.0),
               child: Column(
@@ -67,7 +65,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                   ),
                   const SizedBox(height: 10),
-                  InputErrorText(errorText: usernameErrorText),
+                  InputErrorText(errorText: usernameError),
 
                   // Email Input -------------------------------------
                   const SizedBox(height: 20),
@@ -78,7 +76,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                   ),
                   const SizedBox(height: 10),
-                  InputErrorText(errorText: emailErrorText),
+                  InputErrorText(errorText: emailError),
 
                   // Password Input -------------------------------------
                   const SizedBox(height: 20),
@@ -101,7 +99,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                   ),
                   const SizedBox(height: 10),
-                  InputErrorText(errorText: passwordErrorText),
+                  InputErrorText(errorText: passwordError),
 
                   // Confirm Password Input -------------------------------------
                   const SizedBox(height: 20),
@@ -113,7 +111,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     ),
                   ),
                   const SizedBox(height: 10),
-                  InputErrorText(errorText: confirmPasswordErrorText),
+                  InputErrorText(errorText: confirmPasswordError),
 
                   // Register Button ----------------------------------
                   const SizedBox(height: 120),
@@ -130,7 +128,7 @@ class _RegisterPageState extends State<RegisterPage> {
   void registerButtonPressed() async {
     if (_registerFormKey.currentState!.validate()) {
       var result = await _identityController.register(
-        RegisterUserServiceModel(
+        RegisterServiceModel(
           username: _usernameController.text,
           email: _emailController.text,
           password: _passwordController.text,
@@ -143,32 +141,30 @@ class _RegisterPageState extends State<RegisterPage> {
       } else {
         setState(() {
           if (result.usernameErrors != null) {
-            usernameErrorText = result.usernameErrors!.join('\n');
+            usernameError = result.usernameErrors!.join('\n');
           } else {
-            usernameErrorText = null;
+            usernameError = null;
           }
           if (result.emailErrors != null) {
-            emailErrorText = result.emailErrors!.join('\n');
+            emailError = result.emailErrors!.join('\n');
           } else {
-            emailErrorText = null;
+            emailError = null;
           }
           if (result.passwordErrors != null) {
-            passwordErrorText = result.passwordErrors!.join('\n');
+            passwordError = result.passwordErrors!.join('\n');
           } else {
-            passwordErrorText = null;
+            passwordError = null;
           }
           if (result.confirmPasswordErrors != null) {
-            confirmPasswordErrorText = result.confirmPasswordErrors!.join('\n');
+            confirmPasswordError = result.confirmPasswordErrors!.join('\n');
           } else {
-            confirmPasswordErrorText = null;
+            confirmPasswordError = null;
           }
-          _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
         });
       }
     }
   }
 
-  // textControllers exits when finished
   @override
   void dispose() {
     _usernameController.dispose();

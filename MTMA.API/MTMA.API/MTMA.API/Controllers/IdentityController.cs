@@ -25,9 +25,9 @@
                 : this.BadRequest(identityResult);
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route(nameof(Login))]
-        public async Task<IActionResult> Login([FromQuery] LoginUserServiceModel serviceModel)
+        public async Task<IActionResult> Login([FromBody] LoginUserServiceModel serviceModel)
         {
             var (identityResult, token) = await this._identityService.Login(serviceModel);
 

@@ -2,7 +2,8 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:mock_tests/locator.dart';
-import 'package:mock_tests/ui/views/Home/home_page.dart';
+import 'package:mock_tests/ui/views/account/dashboard.dart';
+import 'package:mock_tests/ui/views/home/home_page.dart';
 import 'package:mock_tests/ui/views/Identity/login_page.dart';
 import 'package:mock_tests/ui/views/Identity/register_page.dart';
 
