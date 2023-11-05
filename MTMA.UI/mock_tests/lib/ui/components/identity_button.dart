@@ -1,7 +1,7 @@
 // ignore_for_file: prefer_const_constructors, must_be_immutable
 
 import 'package:flutter/material.dart';
-import 'package:mock_tests/ui/constants.dart';
+import 'package:mock_tests/core/common/constants.dart';
 
 class IdentityButton extends StatefulWidget {
   String title = '';

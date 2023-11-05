@@ -1,16 +1,14 @@
 // ignore_for_file: use_build_context_synchronously, prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:mock_tests/core/configuration/locator.dart';
 import 'package:mock_tests/core/service_models/identity/register_user_service_model.dart';
-import 'package:mock_tests/locator.dart';
 import 'package:mock_tests/ui/components/identity_button.dart';
 import 'package:mock_tests/ui/components/input_error_text.dart';
 import 'package:mock_tests/ui/controllers/identity_controller.dart';
 import 'package:mock_tests/ui/views/Identity/login_page.dart';
 
 class RegisterPage extends StatefulWidget {
-  static const String id = "register_page";
-
   const RegisterPage({super.key});
 
   @override
@@ -18,7 +16,7 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
-  final _identityController = locator<IdentityController>();
+  final _identityController = serviceLocator<IdentityController>();
   final GlobalKey<FormState> _registerFormKey = GlobalKey<FormState>();
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
@@ -61,7 +59,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   TextFormField(
                     controller: _usernameController,
                     decoration: const InputDecoration(
-                      hintText: "user name",
+                      hintText: "username",
                     ),
                   ),
                   const SizedBox(height: 10),
@@ -137,7 +135,11 @@ class _RegisterPageState extends State<RegisterPage> {
       );
 
       if (result.succeeded) {
-        Navigator.pushNamed(context, LoginPage.id);
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => LoginPage(),
+          ),
+        );
       } else {
         setState(() {
           if (result.usernameErrors != null) {

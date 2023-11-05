@@ -1,13 +1,13 @@
 // ignore_for_file: avoid_unnecessary_containers, prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:flutter/material.dart';
+import 'package:mock_tests/core/common/constants.dart';
 import 'package:mock_tests/ui/components/identity_button.dart';
-import 'package:mock_tests/ui/constants.dart';
 import 'package:mock_tests/ui/views/Identity/login_page.dart';
-import 'package:mock_tests/ui/views/Identity/register_page.dart';
+import 'package:mock_tests/ui/views/account/dashboard_page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomePage extends StatefulWidget {
-  static const String id = "home_page";
   const HomePage({super.key});
 
   @override
@@ -15,8 +15,25 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  late bool _isLoggedIn = false;
+
+  void setIsUserLoggedIn() async {
+    var pref = await SharedPreferences.getInstance();
+    _isLoggedIn = pref.containsKey('token');
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    setIsUserLoggedIn();
+  }
+
   @override
   Widget build(BuildContext context) {
+    if (_isLoggedIn) {
+      return DashboardPage();
+    }
+
     return Container(
       color: Colors.white,
       child: Stack(
@@ -40,13 +57,27 @@ class _HomePageState extends State<HomePage> {
               ),
 
               // Login Button
-              IdentityButton(title: 'Login', onPressed: () => Navigator.pushNamed(context, LoginPage.id)),
+              IdentityButton(
+                title: 'Login',
+                onPressed: () => Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => LoginPage(),
+                  ),
+                ),
+              ),
               SizedBox(
                 height: 20,
               ),
 
               // Register Button
-              IdentityButton(title: 'Register', onPressed: () => Navigator.pushNamed(context, RegisterPage.id)),
+              IdentityButton(
+                title: 'Register',
+                onPressed: () => Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => LoginPage(),
+                  ),
+                ),
+              ),
             ],
           )
         ],

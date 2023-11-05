@@ -1,33 +1,43 @@
+// ignore_for_file: must_be_immutable
+
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:mock_tests/locator.dart';
-import 'package:mock_tests/ui/views/account/dashboard.dart';
+import 'package:local_session_timeout/local_session_timeout.dart';
+import 'package:mock_tests/core/configuration/locator.dart';
+import 'package:mock_tests/core/services/common/local_session/local_session_service_abstract.dart';
 import 'package:mock_tests/ui/views/home/home_page.dart';
-import 'package:mock_tests/ui/views/Identity/login_page.dart';
-import 'package:mock_tests/ui/views/Identity/register_page.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
   // IMPORTANT: This is for testing purposes only. Do not use in production.
   HttpOverrides.global = MTMAHttpOverrides();
   setupLocator();
-  runApp(const MyApp());
+  await serviceLocator.allReady();
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final LocalSessionServiceAbstract _localSessionService = serviceLocator<LocalSessionServiceAbstract>();
+  final _navigatorKey = GlobalKey<NavigatorState>();
+
+  MyApp({super.key}) {
+    _localSessionService.startListening(navigatorKey: _navigatorKey);
+  }
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Mock Tests',
-      home: const HomePage(),
-      routes: {
-        // Identity pages
-        LoginPage.id: (context) => const LoginPage(),
-        RegisterPage.id: (context) => const RegisterPage(),
-      },
+    return SessionTimeoutManager(
+      userActivityDebounceDuration: const Duration(seconds: 1),
+      sessionConfig: _localSessionService.sessionConfig,
+      sessionStateStream: _localSessionService.sessionStateStream.stream,
+      child: MaterialApp(
+        navigatorKey: _navigatorKey,
+        debugShowCheckedModeBanner: false,
+        title: 'Mock Tests',
+        home: const HomePage(),
+      ),
     );
   }
 }

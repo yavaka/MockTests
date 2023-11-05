@@ -1,15 +1,16 @@
 // ignore_for_file: unnecessary_this, use_build_context_synchronously
 
 import 'package:flutter/material.dart';
+import 'package:local_session_timeout/local_session_timeout.dart';
+import 'package:mock_tests/core/configuration/locator.dart';
 import 'package:mock_tests/core/service_models/identity/login_service_model.dart';
-import 'package:mock_tests/locator.dart';
+import 'package:mock_tests/core/services/common/local_session/local_session_service_abstract.dart';
 import 'package:mock_tests/ui/components/identity_button.dart';
 import 'package:mock_tests/ui/controllers/identity_controller.dart';
-import 'package:mock_tests/ui/views/account/dashboard.dart';
+import 'package:mock_tests/ui/views/account/dashboard_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPage extends StatefulWidget {
-  static const String id = "login_page";
   const LoginPage({super.key});
 
   @override
@@ -17,7 +18,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final _identityController = locator<IdentityController>();
+  final _identityController = serviceLocator<IdentityController>();
+  final _localSessionService = serviceLocator<LocalSessionServiceAbstract>();
   final GlobalKey<FormState> _loginFormKey = GlobalKey<FormState>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
@@ -78,7 +80,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
 
-                  // Register Button ----------------------------------
+                  // Login Button ---------------------------------------
                   const SizedBox(height: 120),
                   IdentityButton(title: 'Login', onPressed: loginButtonPressed),
                 ],
@@ -101,9 +103,11 @@ class _LoginPageState extends State<LoginPage> {
 
       if (result.succeeded) {
         this._prefs.setString('token', result.token!);
+        this._localSessionService.sessionStateStream.add(SessionState.startListening);
+
         Navigator.of(context).push(
           MaterialPageRoute(
-            builder: (context) => Dashboard(token: result.token!),
+            builder: (context) => const DashboardPage(),
           ),
         );
       } else {

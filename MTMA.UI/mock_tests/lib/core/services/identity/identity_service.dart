@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart';
-import 'package:mock_tests/app_settings.dart';
+import 'package:mock_tests/core/configuration/app_settings.dart';
 import 'package:mock_tests/core/service_models/identity/login_response_service_model.dart';
 import 'package:mock_tests/core/service_models/identity/login_service_model.dart';
 import 'package:mock_tests/core/service_models/identity/register_error_details_service_model.dart';
