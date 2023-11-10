@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
-
-namespace MTMA.API.Controllers
+﻿namespace MTMA.API.Controllers
 {
-    [Route("api/[controller]")]
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Mvc;
+
+    [Authorize]
     [ApiController]
+    [Route("api/[controller]")]
     public class HomeController : ControllerBase
     {
         private readonly ILogger<HomeController> _logger;
@@ -22,10 +24,8 @@ namespace MTMA.API.Controllers
             }
             catch (Exception e)
             {
-                this._logger.LogError(e, $"{nameof(this.Index)}");
+                this._logger.LogError(e, $"This is Slack Logger test: {nameof(this.Index)}");
             }
-
-            this._logger.LogWarning("This is logged Warning msg");
 
             return this.Ok();
         }
