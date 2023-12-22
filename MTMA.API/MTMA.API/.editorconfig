@@ -24,6 +24,8 @@ dotnet_diagnostic.SA1633.severity = silent
 dotnet_diagnostic.SA1124.severity = silent
 dotnet_diagnostic.SA1309.severity = silent
 dotnet_diagnostic.SA1649.severity = silent
+csharp_style_prefer_primary_constructors = true:suggestion
+dotnet_diagnostic.SA1009.severity = none
 
 [*.{cs,vb}]
 #### Naming styles ####
@@ -91,3 +93,4 @@ dotnet_style_prefer_inferred_anonymous_type_member_names = true:suggestion
 dotnet_style_prefer_compound_assignment = true:suggestion
 dotnet_style_prefer_simplified_interpolation = true:suggestion
 dotnet_style_namespace_match_folder = true:suggestion
+dotnet_style_prefer_collection_expression = true:suggestion
